@@ -15,7 +15,10 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
-    cli (>= 3.6.0)
+    cli (>= 3.6.0),
+    icy
+Remotes:
+    macroverse-r/icy
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
