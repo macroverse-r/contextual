@@ -2,9 +2,15 @@
 % Please edit documentation in R/cx_text.r
 \name{cx_text}
 \alias{cx_text}
-\title{Show information message with context-aware indentation}
+\title{Show information message with context-aware indentation and text wrapping}
 \usage{
-cx_text(message, ..., verbose = TRUE, .envir = parent.frame())
+cx_text(
+  message,
+  ...,
+  verbose = TRUE,
+  max_width = NULL,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{message}{Information message}
@@ -13,8 +19,10 @@ cx_text(message, ..., verbose = TRUE, .envir = parent.frame())
 
 \item{verbose}{Logical, whether to show information messages (default: TRUE)}
 
+\item{max_width}{Maximum width for text wrapping (default: 120, can be set via CX_MAX_WIDTH env var)}
+
 \item{.envir}{Environment for string interpolation}
 }
 \description{
-Show information message with context-aware indentation
+Show information message with context-aware indentation and text wrapping
 }
