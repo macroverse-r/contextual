@@ -4,7 +4,7 @@
 \alias{cx_stop}
 \title{Stop with formatted error message}
 \usage{
-cx_stop(message, ..., .envir = parent.frame())
+cx_stop(message, ..., .envir = parent.frame(), .call_level = -1)
 }
 \arguments{
 \item{message}{Main error message}
@@ -12,6 +12,8 @@ cx_stop(message, ..., .envir = parent.frame())
 \item{...}{Additional message components using cli syntax}
 
 \item{.envir}{Environment for string interpolation}
+
+\item{.call_level}{How far back in the call stack to look for the function name (default -1)}
 }
 \description{
 Stop with formatted error message
