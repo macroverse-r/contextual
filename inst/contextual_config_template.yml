@@ -1,0 +1,70 @@
+# Contextual Configuration Default Template
+#
+# This file serves as a template for your local configuration.
+# A copy will be created as contextual_config_local.yml when the package is loaded for the first time.
+# You should edit contextual_config_local.yml to customize your settings, not this file.
+
+# Default configuration values
+default:
+  CX_DEBUG: FALSE                # TRUE/FALSE to enable debug output
+  CX_AUTO_NUMBER: "all"          # Auto-numbering control: "all", "title", or "none"
+  CX_INDENT_WIDTH: 2             # Base indentation width for cx_text()
+  CX_INDENT_LV_START: 1          # Depth level at which indentation starts (0-4)
+  CX_MAX_WIDTH: 120              # Maximum width for text wrapping in cx_text()
+  CX_BULLET_TYPE: "dot"          # Default bullet type for cx_bullets()
+  CX_BULLET_INDENT: 2            # Additional indentation for bullets (in spaces)
+
+# Configuration variable descriptions
+descriptions:
+  CX_DEBUG: " When set to TRUE, enables maximum diagnostic information including internal state, variable values, and step-by-step execution details. Use for troubleshooting contextual package functions. Default value: FALSE"
+  CX_AUTO_NUMBER: "Controls which functions use automatic hierarchical numbering. Options: 'all' (all cx_ functions auto-number), 'title' (only cx_title auto-numbers), 'none' (no auto-numbering). Default value: 'all'"
+  CX_INDENT_WIDTH: "Base indentation width in spaces for cx_text() function. Each section level multiplies this value (e.g., level 1 = 3 spaces, level 2 = 6 spaces). Default value: 2"
+  CX_INDENT_LV_START: "Depth level at which indentation starts for cx_text() function. Value 0 means indentation starts immediately, value 1 means indentation starts at first section level, etc. Valid range: 0-4. Default value: 1"
+  CX_MAX_WIDTH: "Maximum width in characters for text wrapping in cx_text() function. Text longer than this width will be wrapped to multiple lines while preserving indentation. Default value: 120"
+  CX_BULLET_TYPE: "Controls how bullet points look in lists. Simple bullets use the same symbol for every item: 'dot' (•), 'arrow' (→), 'dash' (-), 'star' (★), 'check' (✓). Auto-numbering creates sequential lists: '1.' gives 1., 2., 3..., 'a.' gives a., b., c..., 'i.' gives i., ii., iii... You can also use colons ('1:', 'a:') or parentheses ('(1)', '(a)'). For Greek letters, use 'grec.' instead of 'α.' for easier typing. Default: 'dot'"
+  CX_BULLET_INDENT: "Additional indentation in spaces specifically for bullet points in cx_bullets() function, added on top of regular section indentation. Default value: 2"
+
+types:
+  CX_DEBUG: boolean
+  CX_AUTO_NUMBER: character
+  CX_INDENT_WIDTH: integer
+  CX_INDENT_LV_START: integer
+  CX_MAX_WIDTH: integer
+  CX_BULLET_TYPE: character
+  CX_BULLET_INDENT: integer
+
+options:
+  CX_AUTO_NUMBER:
+    - "all"
+    - "title" 
+    - "none"
+  CX_INDENT_LV_START:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+  CX_BULLET_TYPE:
+    - "dot"
+    - "arrow"
+    - "dash"
+    - "star"
+    - "check"
+    - "1."
+    - "1:"
+    - "(1)"
+    - "a."
+    - "a:"
+    - "(a)"
+    - "A."
+    - "A:"
+    - "(A)"
+    - "i."
+    - "i:"
+    - "(i)"
+    - "I."
+    - "I:"
+    - "(I)"
+    - "α./grec."
+    - "α:/grec:"
+    - "(α)/(grec)"
