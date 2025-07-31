@@ -1,10 +1,8 @@
 #' Package startup
 #' @keywords internal
 .onLoad <- function(libname, pkgname) {
-  create_local(package = "contextual", verbose = FALSE, overwrite = FALSE)
+  icy::create_local(verbose = FALSE, overwrite = FALSE)
 
-  # Create package environment for state
-  .contextual_env <- new.env(parent = emptyenv())
 
   # Initialize state - CONTEXT-AWARE COUNTERS
   .contextual_env$levels <- c(0, 0, 0)  # levels[1], levels[2], levels[3]
@@ -20,4 +18,7 @@
   # Track universal execution anchor for all reset detection (unified system)
   .contextual_env$last_execution_anchor <- NULL  # Last execution anchor we saw
 }
+
+# Create package environment for state
+.contextual_env <- new.env(parent = emptyenv())
 

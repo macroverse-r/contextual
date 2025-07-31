@@ -24,7 +24,7 @@ cx_text <- function(message, ...,
     # No sections (0) = 0 indent, Section 1 (1) = 3 indent, Section 1.1 (2) = 6 indent, etc.
     # Level 4+ capped at 12 indent
     indent_depth <- .get_current_section_depth() - icy::get_value("CX_INDENT_LV_START")
-    indent <- min(indent_depth * icy::get_value("CX_INDENT_WIDTH"), 12)
+    indent <- max(0,min(indent_depth * icy::get_value("CX_INDENT_WIDTH"), 12))
     } else {
       indent <- 0
     }

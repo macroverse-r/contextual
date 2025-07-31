@@ -2,13 +2,14 @@
 % Please edit documentation in R/cx_text.r
 \name{cx_text}
 \alias{cx_text}
-\title{Show information message with context-aware indentation and text wrapping}
+\title{Show information message with context-aware indent and text wrapping}
 \usage{
 cx_text(
   message,
   ...,
   verbose = TRUE,
   max_width = NULL,
+  indentation = TRUE,
   .envir = parent.frame()
 )
 }
@@ -24,5 +25,5 @@ cx_text(
 \item{.envir}{Environment for string interpolation}
 }
 \description{
-Show information message with context-aware indentation and text wrapping
+Show information message with context-aware indent and text wrapping
 }

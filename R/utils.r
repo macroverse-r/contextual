@@ -122,24 +122,29 @@
 }
 
 # Internal function for cx_title - handles numbering with pre-calculated context
-.cx_title_with_depth <- function(title, effective_depth, script_context_level, reset_applied = FALSE, .envir = parent.frame()) {
+.cx_title_with_depth <- function(title, effective_depth, script_context_level, reset_applied = FALSE, auto_number = TRUE, .envir = parent.frame()) {
   # Update script context level (this was calculated by cx_title)
   .contextual_env$script_context_level <- script_context_level
   
   if (effective_depth <= 3) {
-    # Update level counters using shared logic
+    # Always update counters for context tracking
     .update_level_counters(effective_depth)
     
-    # Build section number using shared logic
-    section_number <- .build_section_number(effective_depth)
-    
-    # Create numbered title
-    numbered_title <- paste0(section_number, ". ", title)
+    # Conditionally add numbering
+    if (auto_number) {
+      # Build section number using shared logic
+      section_number <- .build_section_number(effective_depth)
+      # Create numbered title
+      display_title <- paste0(section_number, ". ", title)
+    } else {
+      # Use title as-is without numbering
+      display_title <- title
+    }
     
     # Format and display using unified formatter
-    .format_heading(numbered_title, effective_depth, .envir = .envir)
+    .format_heading(display_title, effective_depth, .envir = .envir)
   } else if (effective_depth == 4) {
-    # Level 4 - use formatter directly 
+    # Level 4 - use formatter directly (no numbering at this level anyway)
     .format_heading(title, level = 4, .envir = .envir)
   }
   # Depth > 4: no output
@@ -186,7 +191,11 @@
 .get_user_function_depth <- function(calls) {
   excluded_functions <- c("source", "eval", "eval.parent", "local", "eval.with.vis",
                          "do.call", "lapply", "sapply", "for", "{", "withVisible",
-                         "%||%", ".build_section_number", ".GlobalEnv")
+                         "%||%", ".build_section_number", ".GlobalEnv", 
+                         # icy integration: Make .icy_title transparent to hierarchical calculation
+                         ".icy_title", "icy:::.icy_title",
+                         # R internal error handling: Don't count toward user function depth
+                         "tryCatch", "tryCatchList", "tryCatchOne", "doTryCatch")
   
   depth <- 0
   seen_functions <- character()

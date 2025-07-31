@@ -12,7 +12,7 @@ cx_title <- function(title, level_adjust = 0, reset = FALSE, auto_number = TRUE,
   calls <- sys.calls()
   user_depth <- .get_user_function_depth(calls)
   
-  # Debug output
+  
   cx_debug(sprintf("cx_title: user_depth=%d, title='%s', counters=[%d,%d,%d]", 
                    user_depth, substr(title, 1, 20), 
                    .contextual_env$levels[1], .contextual_env$levels[2], .contextual_env$levels[3]), debug = .contextual_env$debug)
@@ -49,16 +49,9 @@ cx_title <- function(title, level_adjust = 0, reset = FALSE, auto_number = TRUE,
   # Combine individual parameter with global setting
   effective_auto_number <- auto_number && .should_auto_number("cx_title")
   
-  if (effective_auto_number) {
-    # Delegate to internal function for numbered titles
-    .cx_title_with_depth(title, effective_depth, script_context_level, reset_applied = should_reset, .envir = .envir)
-  } else {
-    # Use formatter directly for non-numbered titles
-    if (effective_depth <= 4) {
-      .format_heading(title, level = effective_depth, .envir = .envir)
-    }
-    # Depth > 4: no output
-  }
+  # Always run context tracking, but only add numbering when requested
+  .cx_title_with_depth(title, effective_depth, script_context_level, reset_applied = should_reset, 
+                       auto_number = effective_auto_number, .envir = .envir)
   
   invisible()
 }
