@@ -92,7 +92,8 @@ cx_bullets <- function(items, bullet = NULL, .envir = parent.frame()) {
       "arrow" = "→", 
       "dash" = "-",
       "star" = "★",
-      "check" = "✓"
+      "check" = "✓",
+      "none" = ""
     )
     bullet_symbol <- bullet_map[[bullet]] %||% "•"  # fallback to dot
   }
