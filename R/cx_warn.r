@@ -18,8 +18,8 @@ cx_warn <- function(message, ..., verbose = TRUE, bullet = "warn", .envir = pare
     
     # Define custom bullets with better formatting
     bullet_symbols <- list(
-      warn = "⚠️\u00A0\u00A0",
-      fire = "🔥\u00A0\u00A0"
+      warn = "\u26A0\uFE0F\u00A0\u00A0",
+      fire = "\uD83D\uDD25\u00A0\u00A0"
     )
     
     # Format message with bullet

@@ -8,13 +8,14 @@
 #' @param bullet Character string for bullet type (default: uses CX_BULLET_TYPE from config)
 #' @param .envir Environment for string interpolation
 #'
+#' @importFrom utils as.roman
 #' @export
 cx_bullets <- function(items, bullet = NULL, .envir = parent.frame()) {
   if (length(items) == 0) return(invisible())
   
-  # Greek letters for α. numbering
-  greek_letters <- c("α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ", 
-                     "ν", "ξ", "ο", "π", "ρ", "σ", "τ", "υ", "φ", "χ", "ψ", "ω")
+  # Greek letters for \u03B1. numbering
+  greek_letters <- c("\u03B1", "\u03B2", "\u03B3", "\u03B4", "\u03B5", "\u03B6", "\u03B7", "\u03B8", "\u03B9", "\u03BA", "\u03BB", "\u03BC", 
+                     "\u03BD", "\u03BE", "\u03BF", "\u03C0", "\u03C1", "\u03C3", "\u03C4", "\u03C5", "\u03C6", "\u03C7", "\u03C8", "\u03C9")
   
   # Helper function to generate numbered bullets
   generate_numbered_bullet <- function(type, index) {
@@ -46,13 +47,13 @@ cx_bullets <- function(items, bullet = NULL, .envir = parent.frame()) {
       "I." = paste0(toupper(as.roman(index)), "."),
       "I:" = paste0(toupper(as.roman(index)), ":"),
       "(I)" = paste0("(", toupper(as.roman(index)), ")"),
-      "α." = {
+      "\u03B1." = {
         if (index > 24) paste0(index, ".") else paste0(greek_letters[index], ".")
       },
-      "α:" = {
+      "\u03B1:" = {
         if (index > 24) paste0(index, ":") else paste0(greek_letters[index], ":")
       },
-      "(α)" = {
+      "(\u03B1)" = {
         if (index > 24) paste0("(", index, ")") else paste0("(", greek_letters[index], ")")
       },
       # User-friendly Greek aliases
@@ -65,13 +66,13 @@ cx_bullets <- function(items, bullet = NULL, .envir = parent.frame()) {
       "(grec)" = {
         if (index > 24) paste0("(", index, ")") else paste0("(", greek_letters[index], ")")
       },
-      "•"  # fallback
+      "\u2022"  # fallback
     )
   }
   
   # Get bullet type from config if not specified
   if (is.null(bullet)) {
-    bullet <- icy::get_value("CX_BULLET_TYPE")
+    bullet <- icy::get_config(package = "contextual", origin = "priority")$CX_BULLET_TYPE
   }
   
   # Handle slash notation (e.g., "α./grec." -> use first option)
@@ -81,29 +82,29 @@ cx_bullets <- function(items, bullet = NULL, .envir = parent.frame()) {
   
   # Check if this is a numbering type or symbol type
   numbering_types <- c("1.", "1:", "(1)", "a.", "a:", "(a)", "A.", "A:", "(A)", 
-                       "i.", "i:", "(i)", "I.", "I:", "(I)", "α.", "α:", "(α)",
+                       "i.", "i:", "(i)", "I.", "I:", "(I)", "\u03B1.", "\u03B1:", "(\u03B1)",
                        "grec.", "grec:", "(grec)")
   is_numbering <- bullet %in% numbering_types
   
   if (!is_numbering) {
     # Traditional symbol bullets
     bullet_map <- list(
-      "dot" = "•",
-      "arrow" = "→", 
+      "dot" = "\u2022",
+      "arrow" = "\u2192", 
       "dash" = "-",
-      "star" = "★",
-      "check" = "✓",
+      "star" = "\u2605",
+      "check" = "\u2713",
       "none" = ""
     )
-    bullet_symbol <- bullet_map[[bullet]] %||% "•"  # fallback to dot
+    bullet_symbol <- bullet_map[[bullet]] %||% "\u2022"  # fallback to dot
   }
   
   # Calculate base indentation from section depth
-  indent_depth <- .get_current_section_depth() - icy::get_value("CX_INDENT_LV_START")
-  base_indentation <- max(0, min(indent_depth * icy::get_value("CX_INDENT_WIDTH"), 12))
+  indent_depth <- .get_current_section_depth() - icy::get_config(package = "contextual", origin = "priority")$CX_INDENT_LV_START
+  base_indentation <- max(0, min(indent_depth * icy::get_config(package = "contextual", origin = "priority")$CX_INDENT_WIDTH, 12))
   
   # Add bullet-specific indentation
-  bullet_indentation <- icy::get_value("CX_BULLET_INDENT")
+  bullet_indentation <- icy::get_config(package = "contextual", origin = "priority")$CX_BULLET_INDENT
   total_indentation <- base_indentation + bullet_indentation
   
   # Format items

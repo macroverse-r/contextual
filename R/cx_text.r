@@ -16,15 +16,15 @@ cx_text <- function(message, ...,
   if (isTRUE(verbose)) {
     # Get max width from parameter, environment variable, or default
     if (is.null(max_width)) {
-      max_width <- as.numeric(icy::get_value("CX_MAX_WIDTH"))
+      max_width <- as.numeric(icy::get_config(package = "contextual", origin = "priority")$CX_MAX_WIDTH)
     }
     
     if (indentation) {
     # Calculate indent based on current section depth
     # No sections (0) = 0 indent, Section 1 (1) = 3 indent, Section 1.1 (2) = 6 indent, etc.
     # Level 4+ capped at 12 indent
-    indent_depth <- .get_current_section_depth() - icy::get_value("CX_INDENT_LV_START")
-    indent <- max(0,min(indent_depth * icy::get_value("CX_INDENT_WIDTH"), 12))
+    indent_depth <- .get_current_section_depth() - icy::get_config(package = "contextual", origin = "priority")$CX_INDENT_LV_START
+    indent <- max(0,min(indent_depth * icy::get_config(package = "contextual", origin = "priority")$CX_INDENT_WIDTH, 12))
     } else {
       indent <- 0
     }

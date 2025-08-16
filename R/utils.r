@@ -83,19 +83,19 @@
 .format_heading <- function(title, level, .envir = parent.frame()) {
   if (level == 1) {
     # Level 1: bright magenta with double lines, uppercase
-    formatted_title <- cli::col_br_magenta(paste0("═════════ ", cli::style_bold(toupper(title)), " ═════════"))
+    formatted_title <- cli::col_br_magenta(paste0("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 ", cli::style_bold(toupper(title)), " \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550"))
     cli::cli_text(formatted_title, .envir = .envir)
   } else if (level == 2) {
     # Level 2: purple with dashes, title case
-    formatted_title <- paste0("\033[38;5;99m───── ", cli::style_bold(title), " ─────\033[0m")
+    formatted_title <- paste0("\u001b[38;5;99m\u2500\u2500\u2500\u2500\u2500 ", cli::style_bold(title), " \u2500\u2500\u2500\u2500\u2500\u001b[0m")
     cli::cli_text(formatted_title, .envir = .envir)
   } else if (level == 3) {
     # Level 3: lighter purple with short dashes
-    formatted_title <- paste0("\033[38;5;141m─── ", title, "\033[0m")
+    formatted_title <- paste0("\u001b[38;5;141m\u2500\u2500\u2500 ", title, "\u001b[0m")
     cli::cli_text(formatted_title, .envir = .envir)
   } else if (level == 4) {
     # Level 4: arrow with no numbering
-    colored_arrow_title <- paste0("\033[38;5;141m→ \033[0m", title)
+    colored_arrow_title <- paste0("\u001b[38;5;141m\u2192 \u001b[0m", title)
     cli::cli_text(colored_arrow_title, .envir = .envir)
   }
 }
@@ -177,9 +177,9 @@
     return(script_level)
   } else {
     # Deep function calls - calculate based on user_depth for proper hierarchical nesting
-    # user_depth=2 → context should be at least 2 (from shallow calls)
-    # user_depth=3 → context should be at least 3 
-    # user_depth=4 → context should be at least 4
+    # user_depth=2 -> context should be at least 2 (from shallow calls)
+    # user_depth=3 -> context should be at least 3 
+    # user_depth=4 -> context should be at least 4
     # This ensures E() (user_depth=5) gets effective_depth=5 (no output)
     script_level <- .contextual_env$script_context_level
     min_context_for_depth <- script_level + user_depth - 1
