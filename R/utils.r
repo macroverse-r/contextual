@@ -83,15 +83,15 @@
 .format_heading <- function(title, level, .envir = parent.frame()) {
   if (level == 1) {
     # Level 1: bright magenta with double lines, uppercase
-    formatted_title <- cli::col_br_magenta(paste0("\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 ", cli::style_bold(toupper(title)), " \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550"))
+    formatted_title <- cli::col_br_magenta(paste0("\u2550\u2550\u2550\u2550\u2550\u2550 ", cli::style_bold(toupper(title)), " \u2550\u2550\u2550\u2550\u2550\u2550"))
     cli::cli_text(formatted_title, .envir = .envir)
   } else if (level == 2) {
     # Level 2: purple with dashes, title case
-    formatted_title <- paste0("\u001b[38;5;99m\u2500\u2500\u2500\u2500\u2500 ", cli::style_bold(title), " \u2500\u2500\u2500\u2500\u2500\u001b[0m")
+    formatted_title <- paste0("\u001b[38;5;99m\u2500\u2500\u2500\u2500 ", cli::style_bold(title), " \u2500\u2500\u2500\u2500\u001b[0m")
     cli::cli_text(formatted_title, .envir = .envir)
   } else if (level == 3) {
     # Level 3: lighter purple with short dashes
-    formatted_title <- paste0("\u001b[38;5;141m\u2500\u2500\u2500 ", title, "\u001b[0m")
+    formatted_title <- paste0("\u001b[38;5;141m\u2500\u2500\u2500 ", cli::style_italic(title), "\u001b[0m")
     cli::cli_text(formatted_title, .envir = .envir)
   } else if (level == 4) {
     # Level 4: arrow with no numbering
